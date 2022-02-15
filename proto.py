@@ -9,18 +9,16 @@ class PasswordRetriever():
         
         self.passwords = []
         self.num_enteries = len(self.passwords)
-        
         self.window = tkinter.Tk()
-        
 
-        
+    # Function to clear the text in the entry field    
     def clear_text(self, event):
         self.password_field.delete(0, END)
-
+    # Function to append the password to the list and clear the field
     def add_pd(self, event):
         self.passwords.append(self.password_field.get())
         self.password_field.delete(0, END)
-
+    # Runs the main tk window
     def take_passwords(self):
         self.window.title("GUI")
         self.window.geometry("1000x700")
@@ -35,13 +33,10 @@ class PasswordRetriever():
         self.password_field.bind("<Return>", self.add_pd)
         self.password_field.bind("<BackSpace>", self.clear_text)
         self.window.mainloop()
-
+    # Function to get the list of passwords
     def get_passwords(self):
         return self.passwords
 
-    def get_window(self):
-        return self.window
-# window.mainloop()
 
 pr = PasswordRetriever()
 pr.take_passwords()
