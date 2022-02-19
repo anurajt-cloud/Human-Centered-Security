@@ -40,6 +40,12 @@ class PasswordRetriever():
     def get_passwords(self):
         return self.passwords
     
+    # Validates the characters of the password
+    def tap_password_char_check(self, password):
+        char_list = ["f", "g", "h", "j"]
+        matched_char_list = [characters in char_list for characters in password]
+        return all(matched_char_list)
+
     # Validates the password with respect to its length.
     def tap_password_validation(self, event):
         password = self.password_field.get()
@@ -50,13 +56,17 @@ class PasswordRetriever():
             try:
                 # If the password is smaller than the min length then report
                 if len(password)<self.min_tap_len:
-                    msg = 'Password to short.'
+                    msg = 'Password too short.'
                     self.password_field.delete(0, END)
                 # If not then append the password to the list and show success message
                 else:
-                    self.passwords.append(password)
-                    self.password_field.delete(0, END)
-                    msg = 'Success!'
+                    if self.tap_password_char_check(password):
+                        self.passwords.append(password)
+                        self.password_field.delete(0, END)
+                        msg = 'Success!'
+                    else:
+                        msg = 'Password characters incorrect. Only Tap keys F,G,H,J.'
+                        self.password_field.delete(0, END)
             except Exception as ep:
                 tkinter.messagebox.showerror('error', ep)
         tkinter.messagebox.showinfo('message', msg)
