@@ -100,6 +100,7 @@ class PasswordRetriever():
                     msg = 'It should be a digit.' 
                 elif len(pin)!=4:
                     msg = 'Has to be of length 4.'
+                    self.pin_field.delete(0, END)
                 else:
                     self.pins.append(pin)
                     self.pin_field.delete(0, END)
