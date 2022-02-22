@@ -2,6 +2,8 @@ import tkinter as tk
 from tkinter import *
 import tkinter
 from turtle import width
+import os.path
+import csv
 
 class PasswordRetriever():
     
@@ -21,13 +23,14 @@ class PasswordRetriever():
         self.label_box_3 = tkinter.Label()
         self.label_box_4 = tkinter.Label()
         self.command_label = tkinter.Label()
-    
+        self.filename = "visual_cue_tp_data"
+
     # Function to clear the text in the entry field    
     def clear_tp(self, event):
         self.password_field.delete(0, END)
         
     # Runs the main tk window
-    def tap_passwords(self):
+    def create_tap_passwords(self):
 
         # Function to reset the background color of the labels
         def reset():
@@ -169,9 +172,29 @@ class PasswordRetriever():
                 msg = 'Sorry! You are out of attempts.'
             tkinter.messagebox.showinfo('message', msg)
             self.passwords.append(password)
-        self.tap_passwords()
+        self.create_tap_passwords()
 
-pr = PasswordRetriever()
-pr.tap_passwords()
-print(pr.passwords)
-print(pr.set_passwords)
+    def get_filename(self):
+        return self.filename+".csv"
+
+    def create_csv(self):
+        header = ["True_password", "A1","A2","A3","A4","A5","A6"]
+        with open (self.filename+".csv",'a', newline='') as filedata:                             
+            writer = csv.writer(filedata, dialect='excel')
+            writer.writerow(header) 
+
+    def save_data(self):
+        data = [] + [self.password] + self.passwords
+        with open (self.filename+".csv",'a', newline='') as filedata:                            
+            writer = csv.writer(filedata, dialect='excel')
+            writer.writerow(data) 
+        print(data)
+
+if __name__ == "__main__":
+    pr = PasswordRetriever()
+    pr.create_tap_passwords()
+
+    if not os.path.exists(pr.get_filename()):
+        pr.create_csv()
+    pr.save_data()
+    
