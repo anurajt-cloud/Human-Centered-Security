@@ -137,6 +137,7 @@ class PasswordRetriever():
                     self.count += 1
                     msg = 'CORRECT! Consecutive count = '+str(self.count) 
                 else:
+                    self.count = 0
                     msg = 'INCORRECT! Consecutive count RESET = '+str(self.count)      
             tkinter.messagebox.showinfo('message', msg)
 
@@ -168,10 +169,9 @@ class PasswordRetriever():
                 msg = 'Sorry! You are out of attempts.'
             tkinter.messagebox.showinfo('message', msg)
             self.passwords.append(password)
-        tk.messagebox.showinfo("Thank you for participating!")
         self.tap_passwords()
 
 pr = PasswordRetriever()
 pr.tap_passwords()
-print(pr.get_passwords())
+print(pr.passwords)
 print(pr.set_passwords)
