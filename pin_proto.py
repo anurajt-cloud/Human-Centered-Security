@@ -2,6 +2,8 @@ import tkinter as tk
 from tkinter import *
 import tkinter
 from turtle import width
+import csv
+import os
 
 class PINRetriever():
     
@@ -16,6 +18,9 @@ class PINRetriever():
         self.pin_len = 4
         self.con_count = 0
         self.pin_test_count = 6
+
+        # file name
+        self.filename = "pin_data"
 
     # Method to Clear a pin   
     def clear_pin(self, event):
@@ -168,10 +173,34 @@ class PINRetriever():
     def get_pin(self):
         return self.pin
 
-pr = PINRetriever()
+    def get_filename(self):
+        return self.filename+".csv"
 
-pr.create_pin()
-print(pr.get_pin())
-pr.confirm_pin()
-pr.testing_pins()
-print(pr.get_pins())
+    def create_csv(self):
+        header = ["True_PIN", "A1","A2","A3","A4","A5","A6"]
+        with open (self.filename+".csv",'a', newline='') as filedata:                             
+            writer = csv.writer(filedata, dialect='excel')
+            writer.writerow(header) 
+
+    def save_data(self):
+        data = [] + [self.pin] + self.pins
+        with open (self.filename+".csv",'a', newline='') as filedata:                            
+            writer = csv.writer(filedata, dialect='excel')
+            writer.writerow(data) 
+        print(data)
+
+
+
+if __name__ == "__main__":
+    pr = PINRetriever()
+    pr.create_pin()
+    print(pr.get_pin())
+    pr.confirm_pin()
+    print("Password confirmed")
+    pr.testing_pins()
+    print("Passwords:",pr.get_pins())
+
+    if not os.path.exists(pr.get_filename()):
+        pr.create_csv()
+    pr.save_data()
+    
