@@ -16,7 +16,8 @@ class PasswordRetriever():
         self.created_tp = False
         # Var for confirming the password
         self.con_count = 0
-        
+        # Testing appempts count
+        self.test_count = 6
         # Window params
         self.geometry = "1000x700"
         self.background_path = "./bg.png" 
@@ -133,6 +134,42 @@ class PasswordRetriever():
         self.password_field.bind("<BackSpace>", self.clear_tp)
         self.window.mainloop()
 
+    # Validates the password.
+    def tp_testing_validation(self, event):
+        password = self.password_field.get()
+        self.password_val(password)
+        try:
+            the_con, msg = self.password_val(password)     
+            if the_con:
+                self.passwords.append(password)    
+                self.test_count-=1
+                msg = "***CONGRATULATIONS***\n\n6 attempts completed! Thank you" if self.test_count==0 else 'Attempts left = '+str(self.test_count) 
+            self.password_field.delete(0, END)
+        except Exception as ep:
+            tkinter.messagebox.showerror('error', ep)   
+
+        tkinter.messagebox.showinfo('message', msg)
+        
+        if self.test_count==0:
+            self.window.destroy()
+
+    # Confirm password function
+    def testing_passwords(self):
+        self.create_window("CONFIRMING TAP PASSWORDS")
+        img = PhotoImage(file=self.background_path)
+        label = Label(
+            self.window,
+            image=img
+        )
+        label.place(x=0, y=0,relwidth=1, relheight=1)
+        l1 = tk.Label(self.window, text='STATUS: Testing Passwords', fg='Black').pack(side=TOP, anchor=NW)
+        tk.messagebox.showinfo("Instructions", "You are going to enter the created tap password 6 times\n\nOnces entered you will not have a chance to change it\n\nA couunt for number of attempts left will be displayed after every entry\n\nGood Luck, press Ok to start test.")
+        self.password_field = tkinter.Entry(self.window, show="\u2022", font=("Helvetica, 28"), background='#BDBDBD', bd=0, justify='center') #second input-field is placed on position 11 (row - 1 and column - 1)
+        self.password_field.focus_force()
+        self.password_field.place(relx=0.5, rely=0.40, anchor=CENTER)
+        self.password_field.bind("<Return>", self.tp_testing_validation)
+        self.password_field.bind("<BackSpace>", self.clear_tp)
+        self.window.mainloop()
 
     # Function to get the list of passwords
     def get_passwords(self):
@@ -148,4 +185,7 @@ pr = PasswordRetriever()
 pr.create_password()
 print(pr.get_password())
 pr.confirm_password()
+print("Password confirmed")
+pr.testing_passwords()
+print("Passwords:",pr.get_passwords())
 
