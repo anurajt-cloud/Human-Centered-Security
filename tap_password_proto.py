@@ -8,7 +8,7 @@ class PasswordRetriever():
     def __init__ (self):
         
         self.passwords = []
-        
+        self.password = ''
         self.num_enteries = len(self.passwords)
         self.window = None
         self.min_tap_len = 8
@@ -38,39 +38,37 @@ class PasswordRetriever():
     # Function to get the list of passwords
     def get_passwords(self):
         return self.passwords
-    
+
     # Validates the characters of the password
     def tap_password_char_check(self, password):
         char_list = ["f", "g", "h", "j"]
         matched_char_list = [characters in char_list for characters in password]
         return all(matched_char_list)
 
+    def password_val(self, password):
+        if len(password)==0:
+            return False, 'Password can\'t be empty'
+        elif len(password)<self.min_tap_len:
+            return False, 'Password too short.'
+        elif self.tap_password_char_check(password):
+            return True, 'Success!'
+        else:
+            return False, 'Password characters incorrect. Only Tap keys F,G,H,J.'
+
+
     # Validates the password with respect to its length.
     def tap_password_validation(self, event):
         password = self.password_field.get()
-        msg = ''
-        if len(password)==0:
-            msg = 'Password can\'t be empty'
-        else:
-            try:
-                # If the password is smaller than the min length then report
-                if len(password)<self.min_tap_len:
-                    msg = 'Password too short.'
-                    self.password_field.delete(0, END)
-                # If not then append the password to the list and show success message
-                else:
-                    if self.tap_password_char_check(password):
-                        self.passwords.append(password)
-                        self.password_field.delete(0, END)
-                        msg = 'Success!'
-                    else:
-                        msg = 'Password characters incorrect. Only Tap keys F,G,H,J.'
-                        self.password_field.delete(0, END)
-            except Exception as ep:
-                tkinter.messagebox.showerror('error', ep)
+        self.password_val(password)
+        try:
+            the_con, msg = self.password_val(password)
+            if the_con:
+                self.passwords.append(password)
+            self.password_field.delete(0, END)
+        except Exception as ep:
+            tkinter.messagebox.showerror('error', ep)
         tkinter.messagebox.showinfo('message', msg)
 
-    
 
 pr = PasswordRetriever()
 pr.tap_passwords()
