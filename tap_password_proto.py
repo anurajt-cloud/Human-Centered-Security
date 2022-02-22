@@ -31,27 +31,14 @@ class PasswordRetriever():
         self.window.title(title)
         self.window.geometry(self.geometry)
 
-    # Runs the main tk window
-    def create_password(self):
-        self.create_window("CREATING TAP PASSWORDS")
-        img = PhotoImage(file=self.background_path)
-        label = Label(
-            self.window,
-            image=img
-        )
-        label.place(x=0, y=0,relwidth=1, relheight=1)
-        tk.messagebox.showinfo("Instructions", "You are now going to create a tap password\n\n***You will have one attempt to create the password***\n\nAfter creating if not satisfied you can create it again.\n\nPress Ok to create the tap password..")
-        l1 = tk.Label(self.window, text='STATUS: Creating Password', fg='Black').pack(side=TOP, anchor=NW)
-        self.password_field = tkinter.Entry(self.window, show="\u2022", font=("Helvetica, 28"), background='#BDBDBD', bd=0, justify='center') #second input-field is placed on position 11 (row - 1 and column - 1)
-        self.password_field.focus_force()
-        self.password_field.place(relx=0.5, rely=0.40, anchor=CENTER)
-        self.password_field.bind("<Return>", self.tap_password_validation)
-        self.password_field.bind("<BackSpace>", self.clear_tp)
-        self.window.mainloop()
-
+    # Method to ask for confirmation for password creation
     def confirm_creation(self):
         return tk.messagebox.askyesno(title='Confirmation',message='Are you satisfied with the password?')
-        
+
+    # Method to check the password
+    def check_password(self, pw):
+        return self.password==pw
+   
     # Validates the characters of the password.
     def tap_password_char_check(self, password):
         char_list = ["f", "g", "h", "j"]
@@ -71,7 +58,7 @@ class PasswordRetriever():
 
 
     # Validates the password.
-    def tap_password_validation(self, event):
+    def tp_creation_validation(self, event):
         password = self.password_field.get()
         self.password_val(password)
         try:
@@ -89,8 +76,23 @@ class PasswordRetriever():
         if self.created_tp:
             self.window.destroy()
 
-    def check_password(self, pw):
-        return self.password==pw
+    # Runs the main tk window
+    def create_password(self):
+        self.create_window("CREATING TAP PASSWORDS")
+        img = PhotoImage(file=self.background_path)
+        label = Label(
+            self.window,
+            image=img
+        )
+        label.place(x=0, y=0,relwidth=1, relheight=1)
+        tk.messagebox.showinfo("Instructions", "You are now going to create a tap password\n\n***You will have one attempt to create the password***\n\nAfter creating if not satisfied you can create it again.\n\nPress Ok to create the tap password..")
+        l1 = tk.Label(self.window, text='STATUS: Creating Password', fg='Black').pack(side=TOP, anchor=NW)
+        self.password_field = tkinter.Entry(self.window, show="\u2022", font=("Helvetica, 28"), background='#BDBDBD', bd=0, justify='center') #second input-field is placed on position 11 (row - 1 and column - 1)
+        self.password_field.focus_force()
+        self.password_field.place(relx=0.5, rely=0.40, anchor=CENTER)
+        self.password_field.bind("<Return>", self.tp_creation_validation)
+        self.password_field.bind("<BackSpace>", self.clear_tp)
+        self.window.mainloop()
 
     # Validates the password.
     def tp_confirmation_validation(self, event):
@@ -126,6 +128,7 @@ class PasswordRetriever():
             image=img
         )
         label.place(x=0, y=0,relwidth=1, relheight=1)
+        tk.messagebox.showinfo("Instructions", "Now you will confirm the password\n\nYou will need to get 5 consecutive correct enteries to confirm successfully\n\nPress Ok to create the Confirm password.")
         l1 = tk.Label(self.window, text='STATUS: Confirming Password', fg='Black').pack(side=TOP, anchor=NW)
         self.password_field = tkinter.Entry(self.window, show="\u2022", font=("Helvetica, 28"), background='#BDBDBD', bd=0, justify='center') #second input-field is placed on position 11 (row - 1 and column - 1)
         self.password_field.focus_force()
@@ -181,6 +184,7 @@ class PasswordRetriever():
 
 
 
+
 pr = PasswordRetriever()
 pr.create_password()
 print(pr.get_password())
@@ -188,4 +192,3 @@ pr.confirm_password()
 print("Password confirmed")
 pr.testing_passwords()
 print("Passwords:",pr.get_passwords())
-
