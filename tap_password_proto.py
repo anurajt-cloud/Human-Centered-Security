@@ -166,7 +166,7 @@ class PasswordRetriever():
         )
         label.place(x=0, y=0,relwidth=1, relheight=1)
         l1 = tk.Label(self.window, text='STATUS: Testing Passwords', fg='Black').pack(side=TOP, anchor=NW)
-        tk.messagebox.showinfo("Instructions", "You are going to enter the created tap password 6 times\n\nOnces entered you will not have a chance to change it\n\nA couunt for number of attempts left will be displayed after every entry\n\nGood Luck, press Ok to start test.")
+        tk.messagebox.showinfo("Instructions", "You are going to enter the created tap password 6 times\n\nOnces entered you will not have a chance to change it\n\nA count for number of attempts left will be displayed after every entry\n\nGood Luck, press Ok to start test.")
         self.password_field = tkinter.Entry(self.window, show="\u2022", font=("Helvetica, 28"), background='#BDBDBD', bd=0, justify='center') #second input-field is placed on position 11 (row - 1 and column - 1)
         self.password_field.focus_force()
         self.password_field.place(relx=0.5, rely=0.40, anchor=CENTER)
