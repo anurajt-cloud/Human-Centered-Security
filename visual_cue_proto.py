@@ -43,6 +43,7 @@ class PasswordRetriever():
         def callback(string_var):
             reset()
             password_string = str(string_var.get())
+            print(password_string)
             last_char = password_string[-1]
             if(last_char == 'f'):
                 self.label_box_1.config(bg='#006400')
@@ -53,7 +54,6 @@ class PasswordRetriever():
             elif (last_char == 'j'):
                 self.label_box_4.config(bg='#006400')
 
-        
         self.window.title("TAP PASSWORDS")
         self.window.geometry("1000x700")
         img = PhotoImage(file="./bg.png")
@@ -83,10 +83,10 @@ class PasswordRetriever():
             self.password_field.bind("<BackSpace>", self.clear_tp)
 
         if(self.password is not None):
-            self.command_label.config(text='Enter your password')
+            self.command_label.config(text='STATUS: Testing password')
             enter_password()
         else:
-            self.command_label.config(text='Set your password')
+            self.command_label.config(text='STATUS: Creating password')
             enter_password()
         
         self.window.mainloop()
@@ -178,13 +178,13 @@ class PasswordRetriever():
         return self.filename+".csv"
 
     def create_csv(self):
-        header = ["True_password", "A1","A2","A3","A4","A5","A6"]
+        header = ["True_password", "Confirmation","Testing"]
         with open (self.filename+".csv",'a', newline='') as filedata:                             
             writer = csv.writer(filedata, dialect='excel')
             writer.writerow(header) 
 
     def save_data(self):
-        data = [] + [self.password] + self.passwords
+        data = [] + [self.password] + [self.set_passwords] + [self.passwords]
         with open (self.filename+".csv",'a', newline='') as filedata:                            
             writer = csv.writer(filedata, dialect='excel')
             writer.writerow(data) 
