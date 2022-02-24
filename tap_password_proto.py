@@ -8,6 +8,7 @@ class PasswordRetriever():
     
     def __init__ (self):
         
+        self.conf_passwords = []
         self.passwords = []
         self.password = ''
         self.num_enteries = len(self.passwords)
@@ -22,7 +23,7 @@ class PasswordRetriever():
         # Window params
         self.geometry = "1000x700"
         self.background_path = "./bg.png" 
-    
+        self.test_bool = False
         # file name
         self.filename = "tp_data"
 
@@ -109,10 +110,12 @@ class PasswordRetriever():
             if the_con:
                 if pass_check:
                     self.con_count+=1
+                    self.conf_passwords.append(password)
                     msg = "PASSWORD CONFIRMED! 5 consecutive attempts reached." if self.con_count==5 else 'CORRECT! Consecutive count = '+str(self.con_count) 
 
                 else:
                     self.con_count=0
+                    self.conf_passwords.append(password)
                     msg = 'INCORRECT! Consecutive count RESET = '+str(self.con_count)
 
             self.password_field.delete(0, END)
@@ -149,16 +152,20 @@ class PasswordRetriever():
         try:
             the_con, msg = self.password_val(password)     
             if the_con:
-                self.passwords.append(password)    
                 self.test_count-=1
-                msg = "***CONGRATULATIONS***\n\n6 attempts completed! Thank you" if self.test_count==0 else 'Attempts left = '+str(self.test_count) 
+                self.passwords.append(password)    
+                if self.check_password(password):
+                    msg = "CORRECT! attempts taken: "+str(6-self.test_count)+"\n\nCONGRATULATIONS & Thank you"
+                    self.test_bool = True
+                else:
+                    msg = "***CONGRATULATIONS***\n\n6 attempts completed! Thank you" if self.test_count==0 else 'INCORRECT! Attempts left = '+str(self.test_count) 
             self.password_field.delete(0, END)
         except Exception as ep:
             tkinter.messagebox.showerror('error', ep)   
 
         tkinter.messagebox.showinfo('message', msg)
         
-        if self.test_count==0:
+        if self.test_count==0 or self.test_bool:
             self.window.destroy()
 
     # Confirm password function
@@ -190,14 +197,17 @@ class PasswordRetriever():
     def get_filename(self):
         return self.filename+".csv"
 
+    def get_conf_passwords(self):
+        return self.conf_passwords
+
     def create_csv(self):
-        header = ["True_password", "A1","A2","A3","A4","A5","A6"]
+        header = ["True_password", "Conf_passwords","Test_passwords"]
         with open (self.filename+".csv",'a', newline='') as filedata:                             
             writer = csv.writer(filedata, dialect='excel')
             writer.writerow(header) 
 
     def save_data(self):
-        data = [] + [self.password] + self.passwords
+        data = [] + [self.password] +[self.conf_passwords]+ [self.passwords]
         with open (self.filename+".csv",'a', newline='') as filedata:                            
             writer = csv.writer(filedata, dialect='excel')
             writer.writerow(data) 
@@ -212,7 +222,7 @@ if __name__ == "__main__":
     print("Password confirmed")
     pr.testing_passwords()
     print("Passwords:",pr.get_passwords())
-
+    print("Conf passwords:", pr.get_conf_passwords())
     if not os.path.exists(pr.get_filename()):
         pr.create_csv()
     pr.save_data()

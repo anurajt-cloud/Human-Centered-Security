@@ -107,10 +107,10 @@ class PINRetriever():
                     self.pin_test_count-=1
                     self.pins.append(pin)
                     if self.pin_check(pin):
-                        msg = "Correct! Attempts taken: "+str(6-self.pin_test_count)+"\n\nCONGRATULATIONS & Thank you"
+                        msg = "CORRECT! Attempts taken: "+str(6-self.pin_test_count)+"\n\nCONGRATULATIONS & Thank you"
                         self.test_bool = True
                     else:
-                        msg = "***CONGRATULATIONS***\n\n6 attempts completed! Thank you" if self.pin_test_count==0 else 'Attempts left = '+str(self.pin_test_count) 
+                        msg = "***CONGRATULATIONS***\n\n6 attempts completed! Thank you" if self.pin_test_count==0 else 'INCORRECT! Attempts left = '+str(self.pin_test_count) 
                 self.pin_field.delete(0, END)
             except Exception as ep:
                 tkinter.messagebox.showerror('error', ep)
