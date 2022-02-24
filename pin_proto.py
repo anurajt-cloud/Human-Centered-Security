@@ -186,7 +186,7 @@ class PINRetriever():
         return self.conf_pins
 
     def create_csv(self):
-        header = ["True_PIN", "Conf_pins","Test_pins"]
+        header = ["True_pin", "Confirmation","Testing"]
         with open (self.filename+".csv",'a', newline='') as filedata:                             
             writer = csv.writer(filedata, dialect='excel')
             writer.writerow(header) 
