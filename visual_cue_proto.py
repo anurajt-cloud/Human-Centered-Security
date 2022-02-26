@@ -81,7 +81,7 @@ class PasswordRetriever():
             self.password_field.place(relx=0.5, rely=0.40, anchor=CENTER)
             self.password_field.bind("<Return>", self.processing_password)
             self.password_field.bind("<BackSpace>", self.clear_tp)
-
+            
         if(self.password is not None):
             self.command_label.config(text='STATUS: Testing password')
             enter_password()
@@ -94,6 +94,10 @@ class PasswordRetriever():
         
         self.window.mainloop()
     
+    def test_tap_passwords(self):
+        self.window = tkinter.Tk()
+        self.create_tap_passwords()
+        
     # Validates the characters of the password
     def tap_password_char_check(self, password):
         char_list = ["f", "g", "h", "j"]
@@ -134,7 +138,7 @@ class PasswordRetriever():
             msg = "PASSWORD CONFIRMED! 5 consecutive attempts reached."
             tkinter.messagebox.showinfo('message', msg)
             self.password = self.set_password
-            tk.messagebox.showinfo("Instructions", "You are going to enter the created tap password 6 times\n\nOnces entered you will not have a chance to change it\n\nA count for number of attempts left will be displayed after every entry\n\nGood Luck, press Ok to start test.")
+            self.window.destroy()
         else:
             if (self.tap_password_validation(password)):
                 if (password == self.set_password):
@@ -159,13 +163,16 @@ class PasswordRetriever():
                 tkinter.messagebox.showinfo('message', msg)
                 self.set_password = password
                 self.set_passwords.append(password)
+            self.create_tap_passwords()
         elif(self.password is None):
                 self.confirm_password(password)
                 self.set_passwords.append(password)
         else:
             if(self.check_password(password)):
                 self.attempt += 1
-                msg = "Password is correct."
+                msg = "Password is correct. Thank you for participating!"
+                tkinter.messagebox.showinfo('message', msg)
+                self.window.destroy()
             elif(not self.check_password(password) and self.attempt<6):
                 self.attempt += 1
                 msg = 'Password is incorrect. Attempts left = '+ str(6 - self.attempt)
@@ -173,7 +180,7 @@ class PasswordRetriever():
                 msg = 'Sorry! You are out of attempts.'
             tkinter.messagebox.showinfo('message', msg)
             self.passwords.append(password)
-        self.create_tap_passwords()
+            self.create_tap_passwords()
 
     def get_filename(self):
         return self.filename+".csv"
@@ -194,6 +201,7 @@ class PasswordRetriever():
 if __name__ == "__main__":
     pr = PasswordRetriever()
     pr.create_tap_passwords()
+    pr.test_tap_passwords()
 
     if not os.path.exists(pr.get_filename()):
         pr.create_csv()
