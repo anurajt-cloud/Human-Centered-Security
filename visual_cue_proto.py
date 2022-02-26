@@ -5,7 +5,7 @@ from turtle import width
 import os.path
 import csv
 
-class PasswordRetriever():
+class PasswordRetrieverVisual():
     
     def __init__ (self):
         
@@ -199,7 +199,7 @@ class PasswordRetriever():
         print(data)
 
 if __name__ == "__main__":
-    pr = PasswordRetriever()
+    pr = PasswordRetrieverVisual()
     pr.create_tap_passwords()
     pr.test_tap_passwords()
 

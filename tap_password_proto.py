@@ -201,7 +201,7 @@ class PasswordRetriever():
         return self.conf_passwords
 
     def create_csv(self):
-        header = ["True_password", "Confirmation","Testing"]
+        header = ["True_password", "Confirmation","Testing"] 
         with open (self.filename+".csv",'a', newline='') as filedata:                             
             writer = csv.writer(filedata, dialect='excel')
             writer.writerow(header) 
