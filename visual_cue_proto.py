@@ -85,6 +85,9 @@ class PasswordRetriever():
         if(self.password is not None):
             self.command_label.config(text='STATUS: Testing password')
             enter_password()
+        elif(self.set_password is not None):
+            self.command_label.config(text='STATUS: Confirming password')
+            enter_password()
         else:
             self.command_label.config(text='STATUS: Creating password')
             enter_password()
@@ -112,8 +115,6 @@ class PasswordRetriever():
                 else:
                     if self.tap_password_char_check(password):
                         self.password_field.delete(0, END)
-                        msg = 'Success!'
-                        tkinter.messagebox.showinfo('message', msg)
                         return True
                     else:
                         msg = 'Password characters incorrect. Only Tap the specified keys.'
