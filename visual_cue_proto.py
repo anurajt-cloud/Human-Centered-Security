@@ -43,7 +43,7 @@ class PasswordRetrieverVisual():
         def callback(string_var):
             reset()
             password_string = str(string_var.get())
-            print(password_string)
+            # print(password_string)
             last_char = password_string[-1]
             if(last_char == 'f'):
                 self.label_box_1.config(bg='#006400')
@@ -56,7 +56,7 @@ class PasswordRetrieverVisual():
 
         self.window.title("TAP PASSWORDS")
         self.window.geometry("1000x700")
-        img = PhotoImage(file="./bg.png")
+        img = PhotoImage(master=self.window,file="./bg.png")
         label = Label(
             self.window,
             image=img
@@ -78,6 +78,7 @@ class PasswordRetrieverVisual():
             string_var = StringVar()
             string_var.trace("w", lambda name, index, mode, sv=string_var: callback(string_var))
             self.password_field = tkinter.Entry(self.window, show="\u2022", font=("Helvetica, 28"), background='#BDBDBD', bd=0, justify='center', textvariable=string_var) #second input-field is placed on position 11 (row - 1 and column - 1)
+            self.password_field.focus_force()
             self.password_field.place(relx=0.5, rely=0.40, anchor=CENTER)
             self.password_field.bind("<Return>", self.processing_password)
             self.password_field.bind("<BackSpace>", self.clear_tp)
@@ -196,13 +197,16 @@ class PasswordRetrieverVisual():
         with open (self.filename+".csv",'a', newline='') as filedata:                            
             writer = csv.writer(filedata, dialect='excel')
             writer.writerow(data) 
-        print(data)
+        # print(data)
 
 if __name__ == "__main__":
     pr = PasswordRetrieverVisual()
+    
     pr.create_tap_passwords()
+    
     pr.test_tap_passwords()
 
+    # Creates a csv file is it does not already exist.
     if not os.path.exists(pr.get_filename()):
         pr.create_csv()
     pr.save_data()

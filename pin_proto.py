@@ -45,7 +45,7 @@ class PINRetriever():
         self.window = tkinter.Tk()
         self.window.title("Setting PIN Window")
         self.window.geometry("1000x700")
-        img = PhotoImage(file="./bg.png")
+        img = PhotoImage(master=self.window,file="./bg.png")
         label = Label(
             self.window,
             image=img
@@ -202,13 +202,14 @@ class PINRetriever():
 
 if __name__ == "__main__":
     pr = PINRetriever()
+    # Creating a new pin
     pr.create_pin()
-    print(pr.get_pin())
+    # Confirming a pin
     pr.confirm_pin()
-    print("Password confirmed")
+    # Testing a pin
     pr.testing_pins()
-    print("Passwords:",pr.get_pins())
-    print("Conf_PINs:",pr.get_conf_pins())
+    
+    # Creates a csv file is it does not already exist.
     if not os.path.exists(pr.get_filename()):
         pr.create_csv()
     pr.save_data()

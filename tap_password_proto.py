@@ -85,7 +85,7 @@ class PasswordRetriever():
     # Runs the main tk window
     def create_password(self):
         self.create_window("CREATING TAP PASSWORDS")
-        img = PhotoImage(file=self.background_path)
+        img = PhotoImage(master=self.window,file=self.background_path)
         label = Label(
             self.window,
             image=img
@@ -216,13 +216,14 @@ class PasswordRetriever():
 
 if __name__ == "__main__":
     pr = PasswordRetriever()
+    # Creating a TP
     pr.create_password()
-    print(pr.get_password())
+    # Confirming a TP
     pr.confirm_password()
-    print("Password confirmed")
+    # Testing a TP
     pr.testing_passwords()
-    print("Passwords:",pr.get_passwords())
-    print("Conf passwords:", pr.get_conf_passwords())
+    
+    # Creates a csv file is it does not already exist.
     if not os.path.exists(pr.get_filename()):
         pr.create_csv()
     pr.save_data()
