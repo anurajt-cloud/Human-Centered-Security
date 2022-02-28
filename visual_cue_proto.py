@@ -179,19 +179,24 @@ class PasswordRetrieverVisual():
                 self.confirm_password(password)
                 self.set_passwords.append(password)
         else:
-            if(self.check_password(password)):
-                self.attempt += 1
-                msg = "Password is correct. Thank you for participating!"
-                tkinter.messagebox.showinfo('message', msg)
-                self.window.destroy()
-            elif(not self.check_password(password) and self.attempt<6):
-                self.attempt += 1
-                msg = 'Password is incorrect. Attempts left = '+ str(6 - self.attempt)
+            val, msg =  self.tap_password_validation(password)
+            if val:
+                if(self.check_password(password)):
+                    self.attempt += 1
+                    msg = "CORRECT! Attempts taken: "+str(self.attempt)+" Thank you for participating!"
+                    tkinter.messagebox.showinfo('message', msg)
+                    self.window.destroy()
+                elif(not self.check_password(password) and self.attempt<5):
+                    self.attempt += 1
+                    msg = 'INCORRECT! Attempts left = '+ str(6 - self.attempt)
+                    tkinter.messagebox.showinfo('message', msg)
+                else:
+                    msg = "6 attempts completed! Thank you"
+                    tkinter.messagebox.showinfo('message', msg)
+                    self.window.destroy()
+                self.passwords.append(password)            
             else:
-                msg = 'Sorry! You are out of attempts.'
-            tkinter.messagebox.showinfo('message', msg)
-            self.passwords.append(password)            
-
+                tkinter.messagebox.showinfo('message', msg)
     def get_filename(self):
         return self.filename+".csv"
 

@@ -56,7 +56,7 @@ class PasswordRetriever():
         if len(password)==0:
             return False, 'Password can\'t be empty'
         elif len(password)<self.min_tap_len:
-            return False, 'Password too short.'
+            return False, 'Password should have a min length of 8 taps.'
         elif self.tap_password_char_check(password):
             return True, 'Press Ok to create password again!'
         else:
@@ -162,7 +162,7 @@ class PasswordRetriever():
                     msg = "CORRECT! attempts taken: "+str(6-self.test_count)+"\n\nCONGRATULATIONS & Thank you"
                     self.test_bool = True
                 else:
-                    msg = "***CONGRATULATIONS***\n\n6 attempts completed! Thank you" if self.test_count==0 else 'INCORRECT! Attempts left = '+str(self.test_count) 
+                    msg = "6 attempts completed! Thank you" if self.test_count==0 else 'INCORRECT! Attempts left = '+str(self.test_count) 
             self.password_field.delete(0, END)
         except Exception as ep:
             tkinter.messagebox.showerror('error', ep)   
