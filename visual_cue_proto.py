@@ -127,14 +127,13 @@ class PasswordRetrieverVisual():
                 else:
                     if self.tap_password_char_check(password):
                         self.password_field.delete(0, END)
-                        return True
+                        return True, msg
                     else:
                         msg = 'Password characters incorrect. Only Tap the specified keys.'
                         self.password_field.delete(0, END)
             except Exception as ep:
                 tkinter.messagebox.showerror('error', ep)
-        tkinter.messagebox.showinfo('message', msg)
-        return False
+        return False, msg
 
     # Function to confirm password
     def confirm_password_message(self):
@@ -148,13 +147,17 @@ class PasswordRetrieverVisual():
             self.password = self.set_password
             self.window.destroy()
         else:
-            if (self.tap_password_validation(password)):
+            validation_value, validation_msg = self.tap_password_validation(password) 
+            if (validation_value):
                 if (password == self.set_password):
                     self.count += 1
                     msg = 'CORRECT! Consecutive count = '+str(self.count) 
                 else:
                     self.count = 0
-                    msg = 'INCORRECT! Consecutive count RESET = '+str(self.count)      
+                    msg = 'INCORRECT! Consecutive count RESET = '+str(self.count)  
+            else:
+                self.count = 0
+                msg = 'INCORRECT! Consecutive count RESET = '+str(self.count) + "\n" + validation_msg 
             tkinter.messagebox.showinfo('message', msg)
 
     # Function to check the password for correctness

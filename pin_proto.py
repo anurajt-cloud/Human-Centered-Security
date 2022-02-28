@@ -131,9 +131,13 @@ class PINRetriever():
         else:
             try:
                 if not pin.isdigit():
-                    msg = 'It should be a digit.' 
+                    self.con_count=0
+                    self.conf_pins.append(pin)
+                    msg = 'INCORRECT! Consecutive count RESET = '+str(self.con_count) + '\nIt should be a digit.' 
                 elif len(pin)!=4:
-                    msg = 'Has to be of length 4.'
+                    self.con_count=0
+                    self.conf_pins.append(pin)
+                    msg = 'INCORRECT! Consecutive count RESET = '+str(self.con_count) + '\nHas to be of length 4.'
                 elif self.pin_check(pin):
                     self.con_count+=1
                     self.conf_pins.append(pin)

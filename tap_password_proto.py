@@ -105,7 +105,7 @@ class PasswordRetriever():
         password = self.password_field.get()
         self.password_val(password)
         try:
-            the_con, msg = self.password_val(password)
+            the_con, val_msg = self.password_val(password)
             pass_check = self.check_password(password)
             if the_con:
                 if pass_check:
@@ -117,6 +117,10 @@ class PasswordRetriever():
                     self.con_count=0
                     self.conf_passwords.append(password)
                     msg = 'INCORRECT! Consecutive count RESET = '+str(self.con_count)
+            else:
+                self.con_count=0
+                self.conf_passwords.append(password)
+                msg = 'INCORRECT! Consecutive count RESET = '+str(self.con_count) + "\n" + val_msg
 
             self.password_field.delete(0, END)
         except Exception as ep:
