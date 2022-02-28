@@ -68,8 +68,8 @@ class PasswordRetrieverVisual():
         
         if self.set_password is None:
             tk.messagebox.showinfo("Instructions", "You are now going to create a tap password\n\n***You will have one attempt to create the password***\n\nAfter creating if not satisfied you can create it again.\n\nPress Ok to create the tap password.")
-        # elif self.password is not None and self.set_passwords == 0:
-        #     tk.messagebox.showinfo("Instructions", "You are going to enter the created tap password 6 times\n\nOnces entered you will not have a chance to change it\n\nA count for number of attempts left will be displayed after every entry\n\nGood Luck, press Ok to start test.")
+        elif self.password is not None and (len(self.passwords) == 0):
+             tk.messagebox.showinfo("Instructions", "You are going to enter the created tap password 6 times\n\nOnces entered you will not have a chance to change it\n\nA count for number of attempts left will be displayed after every entry\n\nGood Luck, press Ok to start test.")
         
         self.label_box_1 = tk.Label(self.window, background='#BDBDBD', width=5, height=2)
         self.label_box_1.place(relx=0.35, rely=0.70, anchor=CENTER)        
@@ -187,10 +187,7 @@ class PasswordRetrieverVisual():
             else:
                 msg = 'Sorry! You are out of attempts.'
             tkinter.messagebox.showinfo('message', msg)
-            
-            self.passwords.append(password)
-            # self.create_tap_passwords()
-            
+            self.passwords.append(password)            
 
     def get_filename(self):
         return self.filename+".csv"
@@ -206,7 +203,7 @@ class PasswordRetrieverVisual():
         with open (self.filename+".csv",'a', newline='') as filedata:                            
             writer = csv.writer(filedata, dialect='excel')
             writer.writerow(data) 
-        # print(data)
+        print(data)
 
 if __name__ == "__main__":
     pr = PasswordRetrieverVisual()
