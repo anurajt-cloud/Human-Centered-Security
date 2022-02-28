@@ -43,7 +43,9 @@ class PasswordRetrieverVisual():
         def callback(string_var):
             reset()
             password_string = str(string_var.get())
-            # print(password_string)
+    
+            if password_string=="":
+                return None
             last_char = password_string[-1]
             if(last_char == 'f'):
                 self.label_box_1.config(bg='#006400')
@@ -53,6 +55,7 @@ class PasswordRetrieverVisual():
                 self.label_box_3.config(bg='#006400')
             elif (last_char == 'j'):
                 self.label_box_4.config(bg='#006400')
+    
 
         self.window.title("TAP PASSWORDS")
         self.window.geometry("1000x700")
@@ -63,10 +66,10 @@ class PasswordRetrieverVisual():
         )
         label.place(x=0, y=0,relwidth=1, relheight=1)
         
-        #if self.set_password is None:
-        #    tk.messagebox.showinfo("Instructions", "You are now going to create a tap password\n\n***You will have one attempt to create the password***\n\nAfter creating if not satisfied you can create it again.\n\nPress Ok to create the tap password.")
-        #elif self.password is not None and len(self.passwords == 0):
-        #    tk.messagebox.showinfo("Instructions", "You are going to enter the created tap password 6 times\n\nOnces entered you will not have a chance to change it\n\nA count for number of attempts left will be displayed after every entry\n\nGood Luck, press Ok to start test.")
+        if self.set_password is None:
+            tk.messagebox.showinfo("Instructions", "You are now going to create a tap password\n\n***You will have one attempt to create the password***\n\nAfter creating if not satisfied you can create it again.\n\nPress Ok to create the tap password.")
+        # elif self.password is not None and self.set_passwords == 0:
+        #     tk.messagebox.showinfo("Instructions", "You are going to enter the created tap password 6 times\n\nOnces entered you will not have a chance to change it\n\nA count for number of attempts left will be displayed after every entry\n\nGood Luck, press Ok to start test.")
         
         self.label_box_1 = tk.Label(self.window, background='#BDBDBD', width=5, height=2)
         self.label_box_1.place(relx=0.35, rely=0.70, anchor=CENTER)        
@@ -161,7 +164,7 @@ class PasswordRetrieverVisual():
     # Function for processing the password
     def processing_password(self, event):
         password = self.password_field.get()
-        
+        self.password_field.delete(0, END)
         if(self.set_password is None):
             if (self.tap_password_validation(password) and (self.confirm_password_message())):
                 msg = 'Success!\nNOW enter the correct password 5 consecutive time to confirm the password.'
@@ -184,8 +187,10 @@ class PasswordRetrieverVisual():
             else:
                 msg = 'Sorry! You are out of attempts.'
             tkinter.messagebox.showinfo('message', msg)
+            
             self.passwords.append(password)
-            self.create_tap_passwords()
+            # self.create_tap_passwords()
+            
 
     def get_filename(self):
         return self.filename+".csv"
