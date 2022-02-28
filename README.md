@@ -9,9 +9,11 @@ An instance of the PINRetriever can be used to gather data for evaluation of PIN
 create_pin()
 
 - Method used to create a pin.
-  confirm_pin()
+
+confirm_pin()
 - Method used to confirm the pin.
-  testing_pins()
+
+testing_pins()
 - Method used to test the passwords.
 
 ### Tap Password Prototype - tap_password_proto.py
@@ -21,9 +23,11 @@ An instance of the tap_password_proto.py can be used to gather data for evaluati
 create_password()
 
 - Method used to create a TapPassword.
-  confirm_password()
+
+confirm_password()
 - Method used to confirm the TapPasswords.
-  testing_passwords()
+
+testing_passwords()
 - Method used to test the TapPassword.
 
 ### Tap Password (Visual Cue) - visual_cue_proto.py
@@ -33,7 +37,8 @@ An instance of the PasswordRetriever can be used to gather data for evaluation o
 create_tap_passwords()
 
 - Method used to create and confirm a TapPassword.
-  test_tap_passwords()
+
+test_tap_passwords()
 - Method used to test the TapPassword.
 
 This throws an error at the end, kindly ignore it. The will still get saved in the csv file.
