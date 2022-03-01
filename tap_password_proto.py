@@ -54,13 +54,13 @@ class PasswordRetriever():
     # Method to validate the password.
     def password_val(self, password):
         if len(password)==0:
-            return False, 'Password can\'t be empty'
+            return False, 'INVALID! Password can\'t be empty'
         elif len(password)<self.min_tap_len:
-            return False, 'Password should have a min length of 8 taps.'
+            return False, 'INVALID! Password should have a min length of 8 taps.'
         elif self.tap_password_char_check(password):
             return True, 'Press Ok to create password again!'
         else:
-            return False, 'Password characters incorrect. Only Tap keys F,G,H,J.'
+            return False, 'INVALID! Password characters incorrect. Only Tap keys F,G,H,J.'
 
 
     # Validates the password.
@@ -105,7 +105,7 @@ class PasswordRetriever():
         password = self.password_field.get()
         self.password_val(password)
         try:
-            the_con, val_msg = self.password_val(password)
+            the_con, msg = self.password_val(password)
             pass_check = self.check_password(password)
             if the_con:
                 if pass_check:
@@ -117,10 +117,6 @@ class PasswordRetriever():
                     self.con_count=0
                     self.conf_passwords.append(password)
                     msg = 'INCORRECT! Consecutive count RESET = '+str(self.con_count)
-            else:
-                self.con_count=0
-                self.conf_passwords.append(password)
-                msg = 'INCORRECT! Consecutive count RESET = '+str(self.con_count) + "\n" + val_msg
 
             self.password_field.delete(0, END)
         except Exception as ep:

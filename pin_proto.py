@@ -110,7 +110,7 @@ class PINRetriever():
                         msg = "CORRECT! Attempts taken: "+str(6-self.pin_test_count)+"\n\nCONGRATULATIONS & Thank you"
                         self.test_bool = True
                     else:
-                        msg = "***CONGRATULATIONS***\n\n6 attempts completed! Thank you" if self.pin_test_count==0 else 'INCORRECT! Attempts left = '+str(self.pin_test_count) 
+                        msg = "6 attempts completed! Thank you" if self.pin_test_count==0 else 'INCORRECT! Attempts left = '+str(self.pin_test_count) 
                 self.pin_field.delete(0, END)
             except Exception as ep:
                 tkinter.messagebox.showerror('error', ep)
@@ -131,13 +131,9 @@ class PINRetriever():
         else:
             try:
                 if not pin.isdigit():
-                    self.con_count=0
-                    self.conf_pins.append(pin)
-                    msg = 'INCORRECT! Consecutive count RESET = '+str(self.con_count) + '\nIt should be a digit.' 
+                    msg = 'INVALID! It should be a digit.' 
                 elif len(pin)!=4:
-                    self.con_count=0
-                    self.conf_pins.append(pin)
-                    msg = 'INCORRECT! Consecutive count RESET = '+str(self.con_count) + '\nHas to be of length 4.'
+                    msg ='INVALID! Has to be of length 4.'
                 elif self.pin_check(pin):
                     self.con_count+=1
                     self.conf_pins.append(pin)

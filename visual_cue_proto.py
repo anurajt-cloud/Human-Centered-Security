@@ -116,24 +116,25 @@ class PasswordRetrieverVisual():
     def tap_password_validation(self, password):
         msg = ''
         if len(password)==0:
-            msg = 'Password can\'t be empty'
+            msg = 'INVALID! Password can\'t be empty'
         else:
             try:
                 # If the password is smaller than the min length then report
                 if len(password)<self.min_tap_len:
-                    msg = 'Password too short.'
+                    msg = 'INVALID! Password too short.'
                     self.password_field.delete(0, END)
                 # If not then append the password to the list and show success message
                 else:
                     if self.tap_password_char_check(password):
                         self.password_field.delete(0, END)
-                        return True, msg
+                        return True
                     else:
-                        msg = 'Password characters incorrect. Only Tap the specified keys.'
+                        msg = 'INVALID! Password characters incorrect. Only Tap the specified keys.'
                         self.password_field.delete(0, END)
             except Exception as ep:
                 tkinter.messagebox.showerror('error', ep)
-        return False, msg
+        tkinter.messagebox.showinfo('message', msg)
+        return False
 
     # Function to confirm password
     def confirm_password_message(self):
@@ -141,13 +142,14 @@ class PasswordRetrieverVisual():
 
     # Function to allow user to consecutively enter password 5 times
     def confirm_password(self, password):
+        msg = ''
         if(self.count == 4):
             msg = "PASSWORD CONFIRMED! 5 consecutive attempts reached."
             tkinter.messagebox.showinfo('message', msg)
             self.password = self.set_password
             self.window.destroy()
         else:
-            validation_value, validation_msg = self.tap_password_validation(password) 
+            validation_value = self.tap_password_validation(password) 
             if (validation_value):
                 if (password == self.set_password):
                     self.count += 1
@@ -155,10 +157,7 @@ class PasswordRetrieverVisual():
                 else:
                     self.count = 0
                     msg = 'INCORRECT! Consecutive count RESET = '+str(self.count)  
-            else:
-                self.count = 0
-                msg = 'INCORRECT! Consecutive count RESET = '+str(self.count) + "\n" + validation_msg 
-            tkinter.messagebox.showinfo('message', msg)
+                tkinter.messagebox.showinfo('message', msg)
 
     # Function to check the password for correctness
     def check_password(self, password):
@@ -174,16 +173,16 @@ class PasswordRetrieverVisual():
                 tkinter.messagebox.showinfo('message', msg)
                 self.set_password = password
                 self.set_passwords.append(password)
-            self.create_tap_passwords()
+                self.create_tap_passwords()
         elif(self.password is None):
                 self.confirm_password(password)
                 self.set_passwords.append(password)
         else:
-            val, msg =  self.tap_password_validation(password)
+            val =  self.tap_password_validation(password)
             if val:
                 if(self.check_password(password)):
                     self.attempt += 1
-                    msg = "CORRECT! Attempts taken: "+str(self.attempt)+" Thank you for participating!"
+                    msg = "CORRECT! Attempts taken: "+str(self.attempt)+"\n\nCONGRATULATIONS & Thank you"
                     tkinter.messagebox.showinfo('message', msg)
                     self.window.destroy()
                 elif(not self.check_password(password) and self.attempt<5):
@@ -195,8 +194,7 @@ class PasswordRetrieverVisual():
                     tkinter.messagebox.showinfo('message', msg)
                     self.window.destroy()
                 self.passwords.append(password)            
-            else:
-                tkinter.messagebox.showinfo('message', msg)
+    
     def get_filename(self):
         return self.filename+".csv"
 
