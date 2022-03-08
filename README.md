@@ -5,13 +5,13 @@ Prototypes to test a new form of authentication called TapPassword.
 
 In-order to run the prototypes use the following commands:
 
-Tap Password Prototype Command - 
+Tap Password Prototype Command - \
 *python tap_password_proto.py*
 
-Tap Password Prototype with Visual Cues Command - 
+Tap Password Prototype with Visual Cues Command - \
 *python visual_cue_proto.py*
 
-PIN Prototype Command - 
+PIN Prototype Command - \
 *python pin_proto.py*
 
 ## Explanations:
