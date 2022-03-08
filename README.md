@@ -1,4 +1,4 @@
-# Human-Centered-Security
+# **Human-Centered-Security**
 
 Prototypes to test a new form of authentication called TapPassword.
 ## Running the Prototypes:
@@ -14,7 +14,7 @@ Tap Password Prototype with Visual Cues Command -
 PIN Prototype Command - 
 *python pin_proto.py*
 
-## Explanations
+## Explanations:
 
 ### PIN Prototype - pin_proto.py
 
