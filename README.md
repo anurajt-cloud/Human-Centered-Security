@@ -1,6 +1,20 @@
 # Human-Centered-Security
 
 Prototypes to test a new form of authentication called TapPassword.
+## Running the Prototypes:
+
+In-order to run the prototypes use the following commands:
+
+Tap Password Prototype Command - 
+*python tap_password_proto.py*
+
+Tap Password Prototype with Visual Cues Command - 
+*python visual_cue_proto.py*
+
+PIN Prototype Command - 
+*python pin_proto.py*
+
+## Explanations
 
 ### PIN Prototype - pin_proto.py
 
@@ -51,12 +65,4 @@ test_tap_passwords()
 - On the first run of a retriever a csv file will be created and on every subsequent run the data will get appended to the same file created earlier.
 - After running each retriever a csv file will be created that will contain all the data gathered.
 
-## Running the Prototypes:
 
-In-order to run the prototypes use the following commands:
-
-Tap Password Prototype - *python tap_password_proto.py*
-
-Tap Password Prototype with Visual Cues - *python visual_cue_proto.py*
-
-PIN Prototype - *python pin_proto.py*
